@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hole Golf Resort</title>
+<style>
+  :root {
+    --background-color: #f5f5f5;
+    --text-color: #333333;
+    --content-bg-color: #ffffff;
+    --footer-bg-color: #E6E6E6;
+    --option-bg-color: #f5f5f5;
+    --option-border-color: #cccccc;
+    --link-color: #FFFCFC;
+    --header-color: #1d3d24;
+    --nav-bg: linear-gradient(135deg, #2b5d34, #1d3d24);
+    --box-bg: linear-gradient(135deg, #2b5d34, #1d3d24);
+    --box-border: #1F6811;
+    --section-bg: #1d3d24;
+    --overlay-bg: rgba(0, 0, 0, 0.7);
+  }
+
+  [data-theme="dark"] {
+    --background-color: #333333;
+    --text-color: #ffffff;
+    --content-bg-color: #444444;
+    --footer-bg-color: #222222;
+    --option-bg-color: #555555;
+    --option-border-color: #777777;
+    --link-color: #ffffff;
+    --header-color: #4a7553;
+    --nav-bg: linear-gradient(135deg, #4a7553, #2d4d34);
+    --box-bg: linear-gradient(135deg, #4a7553, #2d4d34);
+    --box-border: #3F8831;
+    --section-bg: #2d4d34;
+    --overlay-bg: rgba(0, 0, 0, 0.85);
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  .navigationbar {
+    height: 50px;
+    background: var(--nav-bg);
+    transition: background 0.3s ease;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    height: 100%;
+    align-items: center;
+  }
+
+  li {
+    padding-left: 20px;
+  }
+
+  .navigationbar a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  .picture {
+    height: 500px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8);
+  }
+
+  .overlay-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--overlay-bg);
+    color: var(--link-color);
+    padding: 40px;
+    text-align: center;
+    width: 80%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+  }
+
+  .overlay-box h3 {
+    font-size: 36px;
+    animation: glow 1.5s ease-in-out infinite alternate;
+    margin: 0;
+  }
+
+  .overlay-box p {
+    font-size: 20px;
+    margin: 20px 0 0;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-delay: 1s;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff, 0 0 20px #2b5d34, 0 0 30px #2b5d34, 0 0 40px #2b5d34;
+    }
+
+    to {
+      text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #2b5d34, 0 0 50px #2b5d34, 0 0 60px #2b5d34;
+    }
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .section {
+    background-color: var(--section-bg);
+    color: var(--link-color);
+    padding: 40px;
+    text-align: center;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
+
+  .section h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .section p {
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .pictures {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+  }
+
+  .box {
+    width: 200px;
+    height: 220px;
+    background: var(--box-bg);
+    border: 2px solid var(--box-border);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    text-align: center;
+    position: relative;
+    padding: 15px;
+    transition: all 0.3s ease;
+    color: var(--link-color);
+    cursor: pointer; 
+  }
+
+  .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(43, 93, 52, 0.3);
+  }
+
+  .box .icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: var(--link-color);
+    transition: transform 0.2s ease;
+  }
+
+  .box:hover .icon {
+    transform: scale(1.1);
+  }
+
+  .box .headline {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--link-color);
+  }
+
+  .box .subtext {
+    font-size: 14px;
+    color: var(--link-color);
+    opacity: 0.8;
+    text-align: center;
+  }
+
+  .footer {
+    height: 200px;
+    background: var(--footer-bg-color);
+    text-align: center;
+    padding: 20px;
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+  }
+
+  .alternating-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 10%;
+    background-color: var(--content-bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+    position: relative; 
+    margin-bottom: 30px;
+  }
+
+  .alternating-section:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .alternating-section img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .alternating-section .content {
+    max-width: 50%;
+    padding: 0 20px;
+  }
+
+  .alternating-section p { 
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--header-color);
+    color: var(--link-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.1);
+    background-color: var(--text-color);
+    color: var(--content-bg-color);
+  }
+
+  .zoom-controls-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 15px;
+  }
+
+  .zoom-controls-footer button {
+    background-color: var(--header-color);
+    color: var(--link-color);
+    font-size: 16px;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .zoom-controls-footer button:hover {
+    background-color: var(--section-bg);
+  }
+
+  .section-heading { 
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0 0 15px 0;
+    color: #2b5d34;
+    font-family: Arial, sans-serif;
+  }
+  
+  [data-theme="dark"] .section-heading {
+    color: #4ade80;
+  }
+
+  .alternating-section .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay-bg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px; 
+  }
+
+  .alternating-section:hover .overlay {
+    opacity: 1;
+  }
+
+  .alternating-section .overlay h2 {
+    color: var(--link-color);
+    font-size: 2rem;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+</style>
+</head>
+<body data-theme="light">
+
+<div class="navigationbar">
+  <ul>
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+    <li><a href="settings.html">SETTINGS</a></li>
+  </ul>
+</div>
+
+<div class="picture">
+  <img src="https://image.deemples.com/wp-content/uploads/2022/06/Health-benefits-of-playing-golf-main.jpg" alt="Golf Image">
+  <div class="overlay-box">
+    <h3>Welcome to Hole</h3>
+    <p>Your ultimate destination for all things golf.<br> Perfect your swing, enjoy stunning courses,<br> Join a community that loves the game as much as you do!</p>
+  </div>
+</div>
+
+<div style="padding: 40px 0;">
+  <center>
+    <h1>Experience Luxury Golfing</h1>
+    <p>At Hole, we offer an unparalleled golfing experience surrounded by breathtaking landscapes and world-class facilities. Our golf courses are meticulously designed to provide both challenge and enjoyment, catering to golfers of all levels.</p>
+  </center>
+</div>
+
+<div class="section">
+  <h1>Facilities Offered by Us</h1>
+  <p>We pride ourselves on providing top-notch amenities to enhance your golfing experience, including exquisite dining options, a state-of-the-art gym, and luxurious accommodation. Experience the perfect blend of leisure and sport at Hole Golf Resort.</p>
+</div>
+
+<div class="pictures">
+  <div class="box" onclick="location.href='#golf-course'"> 
+    <div class="icon">⛳</div>
+    <div class="headline">Golf Courses</div>
+    <div class="subtext">Beautifully designed courses.</div>
+  </div>
+  <div class="box" onclick="location.href='#dining'">
+    <div class="icon">🍽️</div>
+    <div class="headline">Dining</div>
+    <div class="subtext">Exquisite dining options.</div>
+  </div>
+  <div class="box" onclick="location.href='#gym'">
+    <div class="icon">🏋️</div>
+    <div class="headline">Gym</div>
+    <div class="subtext">State-of-the-art fitness center.</div>
+  </div>
+  <div class="box" onclick="location.href='#accommodation'">
+    <div class="icon">🏨</div>
+    <div class="headline">Accommodation</div>
+    <div class="subtext">Luxurious on-site lodging.</div>
+  </div>
+</div>
+
+
+<div class="alternating-section" id="golf-course">  
+  <img src="https://www.dubaigolf.com/media/pimpsacl/dsc_0244.jpg?anchor=center&mode=crop&width=1366&height=672&rnd=133216253386600000" alt="Golf Course Image">
+  <div class="content"> 
+    <h2 class="section-heading">Golf Course</h2>
+    <p>Our golf courses are designed for golfers of all skill levels. Whether you're a beginner or a seasoned pro, you'll find a course that challenges and inspires you.</p>
+  </div>
+  <div class="overlay">
+    <h2>Golf Course</h2>
+  </div>
+</div>
+
+<div class="alternating-section" id="dining">  
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtIggduRE0PBXT3pCXBdlsUJG1XllYVPQig&s" alt="Dining Image">
+  <div class="content">
+    <h2 class="section-heading">Dining</h2> 
+    <p>Indulge in exquisite dining experiences at our restaurants, offering a diverse
+      range of cuisines to satisfy every palate.</p>
+  </div>
+  <div class="overlay">
+    <h2>Dining</h2>
+  </div>
+</div>
+
+<div class="alternating-section" id="gym">
+  <img src="https://www.editionhotels.com/wp-content/uploads/2022/08/EDT_Dubai_22_RGB_V1.jpg" alt="Gym Image">
+  <div class="content">
+    <h2 class="section-heading">Gym</h2>
+    <p>Improve your physical fitness by using our state-of-the-art gym with licensed fitness specialists and trainers. <a href="https://www.jaresortshotels.com/dubai/ja-the-resort/golf/ja-fitness"></a></p>
+  </div>
+  <div class="overlay">
+    <h2>Gym</h2>
+  </div>
+</div>
+
+<div class="alternating-section" id="accommodation">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHnqCKtinqAQQP_LOmAz8cUxPef2haaHyJvg&s" alt="Accommodation Image">
+  <div class="content">
+    <h2 class="section-heading">Accommodation</h2>
+    <p>Relax and rejuvenate in our luxurious accommodations, designed for ultimate comfort and convenience. <a href="https://www.jaresortshotels.com/dubai/ja-the-resort/golf/ja-fitness"></a></p>
+  </div>
+  <div class="overlay">
+    <h2>Accommodation</h2>
+  </div>
+</div>
+
+
+<div class="footer">
+  <p>&copy; 2024 Hole Golf Resort. All rights reserved.</p>
+</div>
+
+<button class="theme-toggle" onclick="toggleTheme()">Change Theme</button> 
+
+<script>
+  function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    body.setAttribute("data-theme", newTheme); 
+  }
+</script>
+
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hole Golf Resort</title>
+<style>
+  /* ... (Your existing CSS styles) ... */
+
+  .zoom {
+    transform: scale(1.2); /* Adjust the value for desired magnification */
+    transform-origin: center; /* Optional: Adjust the origin of the zoom */
+  }
+</style>
+</head>
+<body data-theme="light">
+
+  <script>
+    const body = document.body;
+    let scale = 1;
+    const scaleFactor = 0.1; // Adjust for sensitivity
+
+    body.addEventListener('wheel', (event) => {
+      if (event.ctrlKey) {
+        event.preventDefault(); // Prevent default scrolling only if Ctrl is pressed
+
+        if (event.deltaY < 0) {
+          scale += scaleFactor;
+        } else {
+          scale -= scaleFactor;
+        }
+        // Limit scale to a reasonable range
+        scale = Math.min(Math.max(0.5, scale), 2);
+        body.style.transform = `scale(${scale})`;
+      }
+    });
+
+    // Reset zoom when Ctrl + 0 is pressed
+    document.addEventListener('keydown', (event) => {
+      if (event.ctrlKey && event.key === '0') {
+        scale = 1;
+        body.style.transform = 'scale(1)';
+      }
+    });
+
+    // For touchpad pinch zooming (experimental, may require browser support)
+    // ... (touchpad code remains the same) ... 
+  </script>
+</body>
+
+</html>

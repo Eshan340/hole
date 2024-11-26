@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Settings - Hole Golf Resort</title>
+<style>
+    :root {
+        --background-color: #f5f5f5;
+        --text-color: #333333;
+        --content-bg-color: #ffffff;
+        --footer-bg-color: #E6E6E6;
+        --option-bg-color: #f5f5f5;
+        --option-border-color: #cccccc;
+        --link-color: #FFFCFC;
+        --header-color: #1d3d24;
+    }
+
+    [data-theme="dark"] {
+        --background-color: #333333;
+        --text-color: #ffffff;
+        --content-bg-color: #444444;
+        --footer-bg-color: #555555;
+        --option-bg-color: #555555;
+        --option-border-color: #777777;
+        --link-color: #ffffff;
+        --header-color: #ffffff;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: Arial, sans-serif;
+    }
+
+    .navigationbar {
+        height: 50px;
+        background: linear-gradient(135deg, #2b5d34, #1d3d24);
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        height: 100%;
+        align-items: center;
+    }
+
+    li {
+        padding-left: 20px;
+    }
+
+    .navigationbar a {
+        color: var(--link-color);
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .content {
+        padding: 40px;
+        text-align: center;
+        background-color: var(--content-bg-color);
+        border-radius: 10px;
+        margin: 20px auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+    }
+
+    h1 {
+        font-size: 28px;
+        color: var(--header-color);
+        margin-bottom: 20px;
+    }
+
+    .setting-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0;
+        background-color: var(--option-bg-color);
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid var(--option-border-color);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .setting-option label {
+        font-size: 18px;
+        color: var(--text-color);
+    }
+
+    .footer {
+        height: 100px;
+        background: var(--footer-bg-color);
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: var(--content-bg-color);
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--header-color);
+        margin-bottom: 10px;
+    }
+
+    .modal-body {
+        font-size: 16px;
+        color: var(--text-color);
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <div class="navigationbar">
+    <ul>
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+    <li><a href="settings.html">SETTINGS</a></li>
+    </ul>
+    </div>
+
+    <div class="content">
+        <h1>Settings</h1>
+
+        <div class="setting-option">
+            <label for="notifications">Enable Notifications:</label>
+            <input type="checkbox" id="notifications">
+        </div>
+
+        <div class="setting-option">
+            <label for="darkMode">Dark Mode:</label>
+            <input type="checkbox" id="darkMode">
+        </div>
+
+        <div class="setting-option">
+            <label for="saveData">Save Data:</label>
+            <input type="checkbox" id="saveData">
+        </div>
+
+        <div class="setting-option">
+            <label for="privacyPolicy">Check Privacy Policy:</label>
+            <button id="privacyPolicy">View</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Hole Golf Resort. All rights reserved.
+    </div>
+
+    <!-- Modal for Privacy Policy -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">Privacy Policy</div>
+            <div class="modal-body">
+                <p>Your privacy is very important to us. We respect your privacy and are committed to protecting your personal data. We collect personal information only when necessary for providing services. We do not share your personal data with third parties unless required by law.</p>
+                <p>By using this website, you agree to our privacy practices. Please read our full privacy policy for more details.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkMode');
+        darkModeToggle.addEventListener('change', function () {
+            if (darkModeToggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        });
+
+        // Privacy policy modal functionality
+        const privacyPolicyButton = document.getElementById('privacyPolicy');
+        const privacyModal = document.getElementById('privacyModal');
+        const closeModal = document.querySelector('.close');
+
+        privacyPolicyButton.addEventListener('click', function () {
+            privacyModal.style.display = "block";
+        });
+
+        closeModal.addEventListener('click', function () {
+            privacyModal.style.display = "none";
+        });
+
+        // Close modal when clicking outside of the modal content
+        window.addEventListener('click', function (event) {
+            if (event.target == privacyModal) {
+                privacyModal.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
+
+<script>
+    const body = document.body;
+    let scale = 1;
+    const scaleFactor = 0.1; // Adjust for sensitivity
+
+    body.addEventListener('wheel', (event) => {
+      if (event.ctrlKey) {
+        event.preventDefault(); // Prevent default scrolling only if Ctrl is pressed
+
+        if (event.deltaY < 0) {
+          scale += scaleFactor;
+        } else {
+          scale -= scaleFactor;
+        }
+        // Limit scale to a reasonable range
+        scale = Math.min(Math.max(0.5, scale), 2);
+        body.style.transform = `scale(${scale})`;
+      }
+    });
+
+    // Reset zoom when Ctrl + 0 is pressed
+    document.addEventListener('keydown', (event) => {
+      if (event.ctrlKey && event.key === '0') {
+        scale = 1;
+        body.style.transform = 'scale(1)';
+      }
+    });
+
+    // For touchpad pinch zooming (experimental, may require browser support)
+    // ... (touchpad code remains the same) ... 
+  </script>
+</body>
+
+</html>

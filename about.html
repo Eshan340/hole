@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - Golf Resort</title>
+<style>
+    :root {
+        --background-color: #f5f5f5;
+        --text-color: #333333;
+        --content-bg-color: #ffffff;
+        --footer-bg-color: #E6E6E6;
+        --option-bg-color: #f5f5f5;
+        --option-border-color: #cccccc;
+        --nav-bg: linear-gradient(135deg, #2b5d34, #1d3d24);
+        --heading-color: #333;
+        --package-bg: #ffffff;
+        --package-text: #333;
+        --bubble-box-bg: #2b5d34;
+        --bubble-box-text: #FFFCFC;
+        --overlay-bg: rgba(0, 0, 0, 0.7); 
+    }
+
+    [data-theme="dark"] {
+        --background-color: #1a1a1a;
+        --text-color: #ffffff;
+        --content-bg-color: #262525;
+        --footer-bg-color: #222222;
+        --option-bg-color: #333333;
+        --option-border-color: #444444;
+        --heading-color: #ffffff;
+        --package-bg: #262525;
+        --package-text: #ffffff;
+        --bubble-box-bg: #2b5d34; 
+        --bubble-box-text: #FFFCFC;
+        --overlay-bg: rgba(0, 0, 0, 0.85); 
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    .navigationbar {
+        height: 50px;
+        background: var(--nav-bg);
+    }
+
+    .navigationbar ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        height: 100%;
+        align-items: center;
+    }
+
+    .navigationbar li {
+        padding-left: 20px;
+    }
+
+    .navigationbar a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    .bubble-box {
+        background-color: var(--bubble-box-bg);
+        color: var(--bubble-box-text);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+        text-align: left;
+        font-size: 16px;
+        opacity: 0; 
+        animation: fadeIn 1s ease-in-out forwards; 
+    }
+
+    h1, h2 {
+        color: var(--heading-color);
+        text-align: center;
+        opacity: 0; 
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .slideshow-container {
+        position: relative;
+        max-width: 100%;
+        margin: auto;
+    }
+
+    .mySlides {
+        display: none;
+        position: relative; 
+    }
+
+    .mySlides img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: transform 0.3s ease;
+        opacity: 0; 
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .mySlides img:hover {
+        transform: scale(1.2);
+    }
+
+    .overlay {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: var(--overlay-bg); 
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .text {
+        color: var(--text-color);
+        font-size: 18px;
+        padding: 10px;
+    }
+
+    .package {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+        width: 80%;
+        max-width: 800px;
+        background: var(--package-bg);
+        color: var(--package-text);
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        opacity: 0; 
+        animation: fadeIn 1s ease-in-out forwards; 
+    }
+
+    .package img {
+        width: 50%;
+        border-radius: 5px;
+        transition: transform 0.3s ease;
+    }
+
+    .package img:hover {
+        transform: scale(1.2);
+    }
+
+    .package-text {
+        padding: 20px;
+        width: 50%;
+    }
+
+    .book-button {
+        display: inline-block;
+        background: #28a745;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+        margin: 20px auto;
+        display: block;
+        width: 200px;
+        opacity: 0;
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    footer {
+        text-align: center;
+        padding: 10px;
+        background: #333;
+        color: #fff;
+    }
+
+    .theme-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--nav-bg); 
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+        transform: scale(1.1);
+        background: #1d3d24; 
+    }
+
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.4); 
+    }
+
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.8); 
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+</head>
+<body data-theme="light">
+    <div class="navigationbar">
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="settings.html">SETTINGS</a></li>
+        </ul>
+    </div>
+
+    <section id="about">
+        <h1>Welcome to Our Golf Resort</h1>
+        <div class="bubble-box"> 
+            <p>Hole Golf Resort is a premier golf destination located in Dubai, UAE, known for its exceptional facilities and top-notch services tailored to golf enthusiasts and visitors alike. With the recent surge in demand for our offerings, the resort is committed to enhancing the experience for our guests while efficiently managing our operations.</p>
+            <p>To meet the growing interest in our facilities and products, we recognize the importance of leveraging modern information technology. As part of this initiative, the owners have made the strategic decision to develop a comprehensive company website. This online platform will not only showcase our world-class amenities, including championship golf courses, luxurious accommodations, and dining options, but also serve as a hub for bookings, customer inquiries, and information dissemination.</p>
+            <p>Our goal is to create a user-friendly and visually appealing website that effectively communicates the unique offerings of Hole Golf Resort, streamlining the customer experience and allowing guests to easily access the information they need to plan their visit. By enhancing our online presence, we aim to solidify our position as a leading golf resort in the region and cater to the evolving needs of our clientele.</p>
+        </div>
+    </section>
+
+    <section id="slideshow">
+        <h2>Our Packages</h2>
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <img src="https://s24806.pcdn.co/wp-content/uploads/2023/08/TheBaysGolf-hittingbay-970.jpg" alt="Five Rounds Package">
+                <div class="overlay">Five Rounds Package</div> 
+            </div>
+            <div class="mySlides fade">
+                <img src="https://www.kayahotels.com/Uploads/superior-room-sea-view-3-2000px7pdsb.9m84n.webp" alt="Triple Tee Package">
+                <div class="overlay">Triple Tee Package</div> 
+            </div>
+            <div class="mySlides fade">
+                <img src="https://www.wondergifts.ae/cdn/shop/files/7_mch25x_bdf114c4-1ba0-460d-b5d4-f2d312b69158_980x640.jpg?v=1726839410" alt="Getaway Break Package">
+                <div class="overlay">Getaway Break Package</div> 
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </section>
+
+    <section id="packages">
+        <h2>Personalized Packages Offered</h2>
+
+        <div class="package">
+            <div class="package-text">
+                <h3>Five Rounds</h3>
+                <p>Five-night full board stay in a luxury suite</p>
+                <p>Five 18-hole rounds</p>
+                <p>One guaranteed round on the famous Sea View course</p>
+                <p>Complimentary digital coaching session</p>
+            </div>
+            <img src="https://s24806.pcdn.co/wp-content/uploads/2023/08/TheBaysGolf-hittingbay-970.jpg" alt="Five Rounds Package">
+        </div>
+
+        <div class="package">
+            <img src="https://www.kayahotels.com/Uploads/superior-room-sea-view-3-2000px7pdsb.9m84n.webp" alt="Triple Tee Package">
+            <div class="package-text">
+                <h3>Triple Tee</h3>
+                <p>Two-night stay in a double room with breakfast</p>
+                <p>Three rounds of golf on selected courses</p>
+                <p>Complimentary drinks at the clubhouse</p>
+            </div>
+        </div>
+
+        <div class="package" style="flex-direction: row-reverse;"> 
+            <img src="https://www.wondergifts.ae/cdn/shop/files/7_mch25x_bdf114c4-1ba0-460d-b5d4-f2d312b69158_980x640.jpg?v=1726839410" alt="Getaway Break Package">
+            <div class="package-text">
+                <h3>Getaway Break</h3>
+                <p>Two-night full board stay in a family room</p>
+                <p>Two rounds of golf for four players</p>
+                <p>One free dinner at our gourmet restaurant</p>
+            </div>
+        </div>
+
+        <a href="book.html" class="book-button">Book Now</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Hole Golf Resort. All rights reserved.</p>
+    </footer>
+
+    <button class="theme-toggle" onclick="toggleTheme()">Change Theme</button>
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlides();
+        }
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            if (slideIndex >= slides.length) { slideIndex = 0; }
+            if (slideIndex < 0) { slideIndex = slides.length - 1; }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            slides[slideIndex].style.display = "block";
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute("data-theme");
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            body.setAttribute("data-theme", newTheme);
+        }
+    </script>
+</body>
+</html>
+
+<script>
+    const body = document.body;
+    let scale = 1;
+    const scaleFactor = 0.1; // Adjust for sensitivity
+
+    body.addEventListener('wheel', (event) => {
+      if (event.ctrlKey) {
+        event.preventDefault(); // Prevent default scrolling only if Ctrl is pressed
+
+        if (event.deltaY < 0) {
+          scale += scaleFactor;
+        } else {
+          scale -= scaleFactor;
+        }
+        // Limit scale to a reasonable range
+        scale = Math.min(Math.max(0.5, scale), 2);
+        body.style.transform = `scale(${scale})`;
+      }
+    });
+
+    // Reset zoom when Ctrl + 0 is pressed
+    document.addEventListener('keydown', (event) => {
+      if (event.ctrlKey && event.key === '0') {
+        scale = 1;
+        body.style.transform = 'scale(1)';
+      }
+    });
+
+    // For touchpad pinch zooming (experimental, may require browser support)
+    // ... (touchpad code remains the same) ... 
+  </script>
+</body>
+
+</html>
